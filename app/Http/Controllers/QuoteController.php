@@ -33,7 +33,7 @@ class QuoteController extends Controller
     public function deleteQuote($id){
         $quote= Quotes::find($id);
         $quote->delete();
-        return response()->json(['quote'=>'Quote deletd'], 200);
+        return response()->json(['quote'=>'Quote deleted'], 200);
 
     }
 }
