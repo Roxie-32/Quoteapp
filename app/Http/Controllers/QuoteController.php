@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Quotes;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class QuoteController extends Controller
 {
     public function postQuote(Request $request){
+        if(!$user = JWTAuth::parseToken()->authenticate() ){
+            return response()->json(['message' =>'User not found'], 404);
+            
+        }
         $quote= new Quotes();
         $quote->content=$request->input('content');
         $quote->save();
