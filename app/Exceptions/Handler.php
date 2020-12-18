@@ -9,6 +9,7 @@ use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -40,26 +41,24 @@ class Handler extends ExceptionHandler
      
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
+        $this->renderable(function (TokenInvalidException $e, $request) {
+            return Response::json(['error'=>'Invalid token'],401);
+        });
+        $this->renderable(function (TokenExpiredException $e, $request) {
+            return Response::json(['error'=>'Token has Expired'],401);
+        });
+
+        $this->renderable(function (JWTException $e, $request) {
+            return Response::json(['error'=>'Token not parsed'],401);
+        });
+
+        $this->renderable(function (Exception $e, $request) {
+            return Response::json(['error'=>'An Error Occured'],500);
         });
     }
-    public function render($request, Exception $exception)
-    {
-       if($exception instanceof TokenExpiredException){
-           return Response::json(['error'=>'Token Expired'],
-           $exception->getStatusCode());
-       }
-       else if($exception instanceof TokenInvalidException){
-        return Response::json(['error'=>'Token Invalid'],
-        $exception->getStatusCode());
-       }
-       else if($exception instanceof JWTException){
-        return Response::json(['error'=>'Error fetching Token'],
-        $exception->getStatusCode());
-       }
-       
-        return parent::render($request, $exception);
-    }
+
 
 }

@@ -22,6 +22,7 @@ Route::post('/quote', [
 ]);
 Route::get('/quotes', [
 	'uses' => 'QuoteController@getQuotes',
+	'middleware'=>'auth.jwt'
 ]);
 Route::put('/quote/{id}', [
 	'uses' => 'QuoteController@putQuote',
