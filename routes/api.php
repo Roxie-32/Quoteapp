@@ -19,16 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/quote', [
 	'uses' => 'QuoteController@postQuote',
+	'middleware'=>'auth.jwt'
+
 ]);
 Route::get('/quotes', [
 	'uses' => 'QuoteController@getQuotes',
-	'middleware'=>'auth.jwt'
 ]);
 Route::put('/quote/{id}', [
 	'uses' => 'QuoteController@putQuote',
+	'middleware'=>'auth.jwt'
 ]);
 Route::delete('/quote/{id}', [
 	'uses' => 'QuoteController@deleteQuote',
+	'middleware'=>'auth.jwt'
 ]);
 Route::post('/user',[
 	'uses'=>'UserController@signup'

@@ -30,7 +30,7 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'meessage'=>'Successfully Created user'
+            'message'=>'Successfully Created user'
         ],201);
     }
 

@@ -101,9 +101,10 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
-
+    'ttl' => env('JWT_TTL', 3600),
+        //You can do this in the env file remember the env file takes precedence
     /*
+    
     |--------------------------------------------------------------------------
     | Refresh time to live
     |--------------------------------------------------------------------------
